@@ -13,6 +13,23 @@ provider "aws" {
 
 data "aws_caller_identity" "current" {}
 
+data "aws_iam_policy_document" "s3_policy" {
+  statement {
+    sid    = "Stmt34123478"
+    effect = "Allow"
+    actions = [
+      "s3:ListBucket",
+    ]
+    resources = [
+      module.s3_bucket.properties.Arn,
+    ]
+    principals {
+      type        = "AWS"
+      identifiers = [var.iam_user_arn]
+    }
+  }
+}
+
 module "s3_bucket" {
   source  = "terraform-aws-modules/s3-bucket/aws"
   version = "3.15.1"
@@ -30,7 +47,7 @@ module "s3_bucket" {
   acl                      = "public-read"
 
   attach_policy = true
-  policy = var.policy
+  policy = data.aws_iam_policy_document.s3_policy.json
 
   cors_rule = [
     {
