@@ -21,7 +21,7 @@ data "aws_iam_policy_document" "s3_policy" {
       "s3:ListBucket",
     ]
     resources = [
-      module.s3_bucket.this_s3_bucket_arn,
+      module.s3_bucket.s3_bucket_arn,
     ]
     principals {
       type        = "AWS"
