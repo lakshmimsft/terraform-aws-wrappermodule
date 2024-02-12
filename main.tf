@@ -28,21 +28,6 @@ data "aws_iam_policy_document" "s3_policy" {
       identifiers = [var.iam_user_arn]
     }
   }
-
-  statement {
-    sid    = "ListAllMyBuckets"
-    effect = "Allow"
-    actions = [
-      "s3:ListAllMyBuckets",
-    ]
-    resources = [
-      "*",
-    ]
-    principals {
-      type        = "AWS"
-      identifiers = [var.iam_user_arn]
-    }
-  }
 }
 
 module "s3_bucket" {
