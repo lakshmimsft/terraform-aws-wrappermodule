@@ -29,6 +29,9 @@ module "s3_bucket" {
   expected_bucket_owner    = data.aws_caller_identity.current.account_id
   acl                      = "public-read"
 
+  attach_policy = true
+  policy = var.policy
+
   cors_rule = [
     {
       allowed_headers = ["*"]
